@@ -59,12 +59,11 @@ public class AgeCalculation {
             isBathMonth(monthOfBirth);
             yearOfBirth = isScannerBathYear();
             isBathYear(yearOfBirth);
-
             LocalDate localDate = LocalDate.now();
             LocalDate newDate = localDate.minusDays(dateOfBirth).minusMonths(monthOfBirth).minusYears(yearOfBirth);
-            int age1 = newDate.getYear();
-            System.out.println(age1);
-            return age1;
+            int age = newDate.getYear();
+            System.out.println(age);
+            return age;
         } finally {
         }
     }
