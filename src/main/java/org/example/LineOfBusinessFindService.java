@@ -74,12 +74,9 @@ public class LineOfBusinessFindService {
     public void isChoose(List<Company> companies, int choose) {
         try {
             WriterCompany writerCompany = new WriterCompany();
-            ScannerChoose scannerChoose = new ScannerChoose();
             if (choose == 1) {
                 writerCompany.isWriterCompanyIfEmpty(companies);
                 isLineOfBusinessFindService();
-//                choose = scannerChoose.isScannerChoose();
-//                isChoose(companies, choose);
             }    if (choose ==3){
                 writerCompany.isWriterCompanyIfEmpty(companies);
             }

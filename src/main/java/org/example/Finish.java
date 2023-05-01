@@ -2,7 +2,9 @@ package org.example;
 
 public class Finish {
     public void isFinish() {
-        System.out.println("Спасибо, что воспользовались нашим приложением");
+        String finish = "Спасибо, что воспользовались нашим приложением";
+        System.out.println(finish);
         System.exit(0);
     }
 }
+

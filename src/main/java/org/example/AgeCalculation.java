@@ -11,6 +11,12 @@ public class AgeCalculation {
     private int yearOfBirth;
     private int age;
 
+//    public AgeCalculation(int dateOfBirth, int monthOfBirth, int yearOfBirth) {
+//        this.dateOfBirth = dateOfBirth;
+//        this.monthOfBirth = monthOfBirth;
+//        this.yearOfBirth = yearOfBirth;
+//    }
+
     public int getDateOfBirth() {
         return dateOfBirth;
     }
@@ -44,12 +50,22 @@ public class AgeCalculation {
         this.age = age;
     }
 
-    public int isAgeCalculation() throws IOException {
+
+  public int isStartAgeCalculation() throws IOException {
+      dateOfBirth = isScannerBathDay();
+      isBathDay(dateOfBirth);
+      monthOfBirth = isScannerBathMonth();
+      isBathMonth(monthOfBirth);
+      yearOfBirth = isScannerBathYear();
+      isBathYear(yearOfBirth);
+      isAgeCalculation(dateOfBirth, monthOfBirth, yearOfBirth);
+      return age;
+  }
+
+
+    public int isAgeCalculation(int dateOfBirth, int monthOfBirth, int yearOfBirth) throws IOException {
         try {
             LocalDate localDate = LocalDate.now();
-            int dateOfBirth = isBathDay();
-            int monthOfBirth = isBathMonth();
-            int yearOfBirth = isBathYear();
             LocalDate newDate = localDate.minusDays(dateOfBirth).minusMonths(monthOfBirth).minusYears(yearOfBirth);
             int age = newDate.getYear();
             return age;
@@ -57,51 +73,62 @@ public class AgeCalculation {
         }
     }
 
-
-    public int isBathDay() {
-        try {
-            Scanner scanner = new Scanner(System.in);
+    public int isScannerBathDay(){
+    Scanner scanner = new Scanner(System.in);
             System.out.println("Введите день рождения");
-            int dateOfBirth = scanner.nextInt();
+    int dateOfBirth = scanner.nextInt();
+    return dateOfBirth;
+    }
+
+
+    public int isBathDay(int dateOfBirth) {
+        try {
             if (dateOfBirth < 1 || dateOfBirth > 31) {
                 System.out.println("Вы ввели некорректную дату. Дата рождения не может быть меньше 1 или больше 31");
-                return isBathDay();
+                return isScannerBathDay();
             } else return dateOfBirth;
         } catch (InputMismatchException e) {
             System.out.println("Неправильно введены цифры. Введите, пожалуйста, цифровое значение");
-            return isBathDay();
+            return isScannerBathDay();
         }
     }
-
-    public int isBathMonth() {
+    public int isScannerBathMonth(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Введите месяц рождения");
+        int monthOfBirth = scanner.nextInt();
+        return monthOfBirth;
+    }
+    public int isBathMonth(int monthOfBirth) {
         try {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Введите месяц рождения");
-            int monthOfBirth = scanner.nextInt();
             if (monthOfBirth <= 0 || monthOfBirth > 12) {
                 System.out.println("Вы ввели некорректный месяц. Месяц не может быть меньше 1 или больше 12");
-                return isBathMonth();
+                return isScannerBathMonth();
             } else return monthOfBirth;
         } catch (InputMismatchException e) {
             System.out.println("Неправильно введены цифры. Введите, пожалуйста, цифровое значение");
-            return isBathMonth();
+            return isScannerBathMonth();
         }
     }
 
-    public int isBathYear() {
+
+    public int isScannerBathYear(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Введите год рождения");
+        int yearOfBirth = scanner.nextInt();
+        return yearOfBirth;
+    }
+
+    public int isBathYear(int yearOfBirth) {
         try {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Введите год рождения");
-            int yearOfBirth = scanner.nextInt();
             LocalDate localDate = LocalDate.now();
             int thisYear = localDate.getYear();
             if (yearOfBirth < 1920 || yearOfBirth > thisYear) {
                 System.out.println("Вы ввели некорректный год. Год не может быть меньше 1920, а также не может  быть больше текущего года");
-                return isBathYear();
+                return isScannerBathYear();
             } else return yearOfBirth;
         } catch (InputMismatchException e) {
             System.out.println("Неправильно введены цифры. Введите, пожалуйста, цифровое значение");
-            return isBathYear();
+            return isScannerBathYear();
         }
     }
 
