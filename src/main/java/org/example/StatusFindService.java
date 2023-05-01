@@ -68,10 +68,6 @@ public class StatusFindService {
             if (choose == 1) {
                 writerCompany.isWriterCompanyIfEmpty(companies);
                 isStatusFindService();
-//                int statusChoose =scannerChoose.isScanner();
-//                isFindStatusCompany(companies, statusChoose);
-//                choose = scannerChoose.isScannerChoose();
-//                isChoose(companies, choose);
             }
             if (choose ==3){
                 writerCompany.isWriterCompanyIfEmpty(companies);

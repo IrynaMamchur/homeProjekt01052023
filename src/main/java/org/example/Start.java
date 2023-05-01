@@ -9,7 +9,7 @@ public class Start {
     public void isStart() throws IOException {
         try {
             AgeCalculation ageCalculation = new AgeCalculation();
-            int age = ageCalculation.isStartAgeCalculation();
+            int age = ageCalculation.isAgeCalculation();
             AgeCompanyGenerator ageCompanyGenerator = new AgeCompanyGenerator();
             ageCompanyGenerator.isAgeCompanyGenerator(age);
            isSearchEngine();

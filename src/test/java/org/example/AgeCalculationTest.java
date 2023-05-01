@@ -58,12 +58,12 @@ public void testIsBathMonth(){
     }
 
 
-    @Test
-    public void testIsAgeCalculation() throws IOException {
-        int expected =23;
-        int actual = ageCalculation.isAgeCalculation(2,2,2000);
-
-        assertEquals(expected, actual);
-
-    }
+//    @Test
+//    public void testIsAgeCalculation() throws IOException {
+//        int expected =23;
+//        int actual = ageCalculation.isAgeCalculation(2,2,2000);
+//
+//        assertEquals(expected, actual);
+//
+//    }
     }

@@ -23,7 +23,6 @@ public class ScannerChoose {
     public int isScanner(){
         int statusChoose = 0;
         try{Scanner scanner = new Scanner(System.in);
-
             statusChoose = scanner.nextInt();
         } catch (InputMismatchException e) {
             System.out.println("Неправильно введены цифры. Введите, пожалуйста, цифровое значение");

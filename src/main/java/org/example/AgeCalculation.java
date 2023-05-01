@@ -51,24 +51,20 @@ public class AgeCalculation {
     }
 
 
-  public int isStartAgeCalculation() throws IOException {
-      dateOfBirth = isScannerBathDay();
-      isBathDay(dateOfBirth);
-      monthOfBirth = isScannerBathMonth();
-      isBathMonth(monthOfBirth);
-      yearOfBirth = isScannerBathYear();
-      isBathYear(yearOfBirth);
-      isAgeCalculation(dateOfBirth, monthOfBirth, yearOfBirth);
-      return age;
-  }
-
-
-    public int isAgeCalculation(int dateOfBirth, int monthOfBirth, int yearOfBirth) throws IOException {
+    public int isAgeCalculation() throws IOException {
         try {
+            dateOfBirth = isScannerBathDay();
+            isBathDay(dateOfBirth);
+            monthOfBirth = isScannerBathMonth();
+            isBathMonth(monthOfBirth);
+            yearOfBirth = isScannerBathYear();
+            isBathYear(yearOfBirth);
+
             LocalDate localDate = LocalDate.now();
             LocalDate newDate = localDate.minusDays(dateOfBirth).minusMonths(monthOfBirth).minusYears(yearOfBirth);
-            int age = newDate.getYear();
-            return age;
+            int age1 = newDate.getYear();
+            System.out.println(age1);
+            return age1;
         } finally {
         }
     }

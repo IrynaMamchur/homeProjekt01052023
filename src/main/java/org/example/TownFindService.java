@@ -16,8 +16,8 @@ public class TownFindService {
             System.out.println("Отбор по месту нахождения компании");
             System.out.println("Введите название города");
             FurtherActions furtherActions = new FurtherActions();
-            List<Company> companies = readCompanyGenerator.isReadAllCompanies();
             String world =scannerChoose.isScannerString();
+            List<Company> companies = readCompanyGenerator.isReadAllCompanies();
             isFindTownCompany(companies, world);
             int choose = scannerChoose.isScannerChoose();
             isChoose(companies, choose);
@@ -61,8 +61,8 @@ public class TownFindService {
             if (choose == 1) {
                 writerCompany.isWriterCompanyIfEmpty(companies);
                 isTownFindService();
-//                choose = scannerChoose.isScannerChoose();
-//                isChoose(companies, choose);
+               choose = scannerChoose.isScannerChoose();
+               isChoose(companies, choose);
             }    if (choose ==3){
                 writerCompany.isWriterCompanyIfEmpty(companies);
             }

@@ -60,7 +60,6 @@ public class SexFindService {
                 isFindSexCompany(companies, statusChoose);
             }
             writerCompany.isWriterCompany(answer);
-
             if (answer.size() == 0) {
                 System.out.println("По заданному поиску компаний не найдено");
                 writerCompany.isWriterCompanyIfEmpty(companies);
@@ -77,12 +76,9 @@ public class SexFindService {
     public void isChoose(List<Company> companies, int choose) {
         try {
             WriterCompany writerCompany = new WriterCompany();
-            ScannerChoose scannerChoose = new ScannerChoose();
             if (choose == 1) {
                 writerCompany.isWriterCompanyIfEmpty(companies);
                 isSexFindService();
-//                choose =  scannerChoose.isScannerChoose();
-//                isChoose(companies, choose);
             }    if (choose ==3){
                 writerCompany.isWriterCompanyIfEmpty(companies);
             }

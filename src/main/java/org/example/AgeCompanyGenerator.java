@@ -19,6 +19,9 @@ public class AgeCompanyGenerator {
     public void isAgeCompanyGenerator(int age) throws IOException, FileNotFoundException {
 
         try {
+//            AgeCalculation ageCalculation = new AgeCalculation();
+//            age = ageCalculation.isStartAgeCalculation();
+            System.out.println(age);
             ReadCompanyGenerator readCompanyGenerator = new ReadCompanyGenerator();
             List<Company> companies = readCompanyGenerator.isReadCompanies();
             isFindFileCompanies(age, companies);

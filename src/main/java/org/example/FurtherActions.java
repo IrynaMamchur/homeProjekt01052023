@@ -2,20 +2,15 @@ package org.example;
 
 import java.io.IOException;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 
 public class FurtherActions {
     public void isFurtherActions() {
         try {
-            System.out.println("Если Вы хотите продолжить отбор по другим критериям - введите 1,");
-            System.out.println("если вернуться к началу поиска - введите 2,");
-            System.out.println("если выйти из приложения - введите 0.");
-            Scanner scanner = new Scanner(System.in);
+            int stepAgo = isScanner();
             Finish finish = new Finish();
             Start start = new Start();
-            int stepAgo = scanner.nextInt();
             switch (stepAgo) {
                 case 1:
                     start.isSearchEngine();
@@ -34,5 +29,14 @@ public class FurtherActions {
             isFurtherActions();
         }
 
+    }
+
+    public int isScanner() {
+        System.out.println("Если Вы хотите продолжить отбор по другим критериям - введите 1,");
+        System.out.println("если вернуться к началу поиска - введите 2,");
+        System.out.println("если выйти из приложения - введите 0.");
+        Scanner scanner = new Scanner(System.in);
+        int stepAgo = scanner.nextInt();
+        return stepAgo;
     }
 }
