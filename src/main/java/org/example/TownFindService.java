@@ -24,7 +24,7 @@ public class TownFindService {
             List<Company> companies = readCompanyGenerator.readCompanies(fileName);
             filterTownCompany(companies, world);
             int choose = scannerAll.scannerChoose();
-            isChoose(companies, choose);
+            selectionOfActionsInThisCategory(companies, choose);
             FurtherActions furtherActions = new FurtherActions();
             int stepAgo = scannerAll.scannerFurtherActions();
             furtherActions.choiceFurtherActions(stepAgo);
@@ -55,7 +55,7 @@ public class TownFindService {
     }
 
 
-    public void isChoose(List<Company> companies, int choose) {
+    public void selectionOfActionsInThisCategory(List<Company> companies, int choose) {
         try {
             switch (choose) {
                 case 1:
@@ -70,12 +70,12 @@ public class TownFindService {
                 default:
                     printInfo.printInfo(printInfo.takeInfo(10));
                     choose = scannerAll.scannerChoose();
-                    isChoose(companies, choose);
+                    selectionOfActionsInThisCategory(companies, choose);
             }
         } catch (InputMismatchException | IOException e) {
             printInfo.printInfo(printInfo.takeInfo(10));
             choose = scannerAll.scannerChoose();
-            isChoose(companies, choose);
+            selectionOfActionsInThisCategory(companies, choose);
         }
     }
 
