@@ -3,44 +3,43 @@ package org.example;
 import java.io.*;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Scanner;
 
 
 public class LineOfBusinessFindService {
+    PrintInfo printInfo = new PrintInfo();
+    WriterCompany writerCompany = new WriterCompany();
+    ScannerAll scannerAll = new ScannerAll();
+    String fileNameWriter = "resources/findCompany.txt";
+    String fileName = "resources/findCompany.txt";
 
+    ReadCompanyGenerator readCompanyGenerator = new ReadCompanyGenerator();
 
-    public void isLineOfBusinessFindService() throws IOException, FileNotFoundException {
+    public void lineOfBusinessFindService() throws IOException, FileNotFoundException {
 
         try {
-            LineOfBusinessFindService lineOfBusinessFindService= new LineOfBusinessFindService();
-            ReadCompanyGenerator readCompanyGenerator = new ReadCompanyGenerator();
-            ScannerChoose scannerChoose = new ScannerChoose();
-            System.out.println("Отбор по сфере деятельности компании");
-            System.out.println("Укажите поисковые слова деятельности компании, такие как: ");
-            System.out.println("'дети', 'детское', 'для детей', 'языковые', 'язык', 'английский', 'искусство', 'изобразительное', 'рисование', ");
-            System.out.println("'йога', 'спорт', 'прыжки', 'парашют', 'вождения', 'вождение'");
+            printInfo.printInfo(printInfo.takeInfo(16));
+            printInfo.printInfo(printInfo.takeInfo(17));
+            printInfo.printInfo(printInfo.takeInfo(18));
+            printInfo.printInfo(printInfo.takeInfo(19));
+            List<Company> companies = readCompanyGenerator.readCompanies(fileName);
+            String world = scannerAll.scannerString();
+            filterLineOfBusinessCompany(companies, world);
+            int choose = scannerAll.scannerChoose();
+            selectionOfActionsInThisCategory(companies, choose);
             FurtherActions furtherActions = new FurtherActions();
-            List<Company> companies = readCompanyGenerator.isReadAllCompanies();
-            String world = scannerChoose.isScannerString();
-            lineOfBusinessFindService.isFindLineOfBusinessCompany(companies, world);
-            int choose = scannerChoose.isScannerChoose();
-            lineOfBusinessFindService.isChoose(companies, choose);
-            furtherActions.isFurtherActions();
+            int stepAgo = scannerAll.scannerFurtherActions();
+            furtherActions.choiceFurtherActions(stepAgo);
 
         } catch (IOException e) {
-            System.out.println("Неизвестная ошибка");
-            isLineOfBusinessFindService();
+            printInfo.printInfo(printInfo.takeInfo(8));
+            lineOfBusinessFindService();
 
         }
     }
 
-
-
-
-    public List<Company> isFindLineOfBusinessCompany(List<Company> companies, String world) throws IOException {
+    public List<Company> filterLineOfBusinessCompany(List<Company> companies, String world) throws IOException {
 
         try {
-            WriterCompany writerCompany = new WriterCompany();
             String line = world.toLowerCase();
             String business = null;
             switch (line) {
@@ -55,34 +54,42 @@ public class LineOfBusinessFindService {
             List<Company> answer = companies.stream()
                     .filter(company -> company.getLineOfBusiness().equals(finalBusiness))
                     .toList();
-            writerCompany.isWriterCompany(answer);
+            writerCompany.writerCompany(answer, fileNameWriter);
+            printInfo.printList(answer);
             if (answer.size() == 0) {
-                System.out.println("По заданному поиску компаний не найдено");
-                writerCompany.isWriterCompanyIfEmpty(companies);
+                printInfo.printInfo(printInfo.takeInfo(15));
+                writerCompany.writerCompanyIfListEmpty(companies, fileNameWriter);
             }
-            System.out.println("-------------------------------------------------------------------------------");
-
 
         } catch (IOException e) {
-            System.out.println("Неизвестная ошибка");
-            isFindLineOfBusinessCompany(companies, world);
+            printInfo.printInfo(printInfo.takeInfo(8));
+            world = scannerAll.scannerString();
+            filterLineOfBusinessCompany(companies, world);
         }
         return companies;
     }
 
-
-    public void isChoose(List<Company> companies, int choose) {
+    public void selectionOfActionsInThisCategory(List<Company> companies, int choose) {
         try {
-            WriterCompany writerCompany = new WriterCompany();
-            if (choose == 1) {
-                writerCompany.isWriterCompanyIfEmpty(companies);
-                isLineOfBusinessFindService();
-            }    if (choose ==3){
-                writerCompany.isWriterCompanyIfEmpty(companies);
+            switch (choose) {
+                case 1:
+                    writerCompany.writerCompanyIfListEmpty(companies, fileNameWriter);
+                    lineOfBusinessFindService();
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    writerCompany.writerCompanyIfListEmpty(companies, fileNameWriter);
+                    break;
+                default:
+                    printInfo.printInfo(printInfo.takeInfo(10));
+                    choose = scannerAll.scannerChoose();
+                    selectionOfActionsInThisCategory(companies, choose);
             }
-        } catch (IOException e) {
-            System.out.println("Неизвестная ошибка");
-            isChoose(companies, choose);
+        } catch (InputMismatchException | IOException e) {
+            printInfo.printInfo(printInfo.takeInfo(10));
+            choose = scannerAll.scannerChoose();
+            selectionOfActionsInThisCategory(companies, choose);
         }
     }
 

@@ -3,52 +3,53 @@ package org.example;
 import java.io.*;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Scanner;
 
 
 public class TownFindService {
+    PrintInfo printInfo = new PrintInfo();
+    ScannerAll scannerAll = new ScannerAll();
+    WriterCompany writerCompany = new WriterCompany();
 
-    public void isTownFindService() throws IOException, FileNotFoundException {
+    String fileName = "resources/findCompany.txt";
+    String fileNameWriter = "resources/findCompany.txt";
+    ReadCompanyGenerator readCompanyGenerator = new ReadCompanyGenerator();
+
+    public void townFindService() throws IOException, FileNotFoundException {
 
         try {
-            ReadCompanyGenerator readCompanyGenerator = new ReadCompanyGenerator();
-            ScannerChoose scannerChoose = new ScannerChoose();
-            System.out.println("Отбор по месту нахождения компании");
-            System.out.println("Введите название города");
-            FurtherActions furtherActions = new FurtherActions();
-            String world =scannerChoose.isScannerString();
-            List<Company> companies = readCompanyGenerator.isReadAllCompanies();
-            isFindTownCompany(companies, world);
-            int choose = scannerChoose.isScannerChoose();
+            printInfo.printInfo(printInfo.takeInfo(38));
+            printInfo.printInfo(printInfo.takeInfo(39));
+
+            String world = scannerAll.scannerString();
+            List<Company> companies = readCompanyGenerator.readCompanies(fileName);
+            filterTownCompany(companies, world);
+            int choose = scannerAll.scannerChoose();
             isChoose(companies, choose);
-            furtherActions.isFurtherActions();
+            FurtherActions furtherActions = new FurtherActions();
+            int stepAgo = scannerAll.scannerFurtherActions();
+            furtherActions.choiceFurtherActions(stepAgo);
 
         } catch (IOException e) {
-            System.out.println("Неизвестная ошибка");
+            printInfo.printInfo(printInfo.takeInfo(8));
         }
     }
 
 
-
-
-    public List<Company> isFindTownCompany(List<Company> companies, String world) throws IOException {
+    public List<Company> filterTownCompany(List<Company> companies, String world) throws IOException {
         try {
-            WriterCompany writerCompany = new WriterCompany();
             String town = world.toUpperCase();
-
             List<Company> answer = companies.stream()
                     .filter(company -> company.getLocationCity().equals(town))
                     .toList();
-            writerCompany.isWriterCompany(answer);
+            writerCompany.writerCompany(answer, fileNameWriter);
+            printInfo.printList(answer);
             if (answer.size() == 0) {
-                System.out.println("По заданному поиску компаний не найдено");
-                writerCompany.isWriterCompanyIfEmpty(companies);
+                printInfo.printInfo(printInfo.takeInfo(15));
+                writerCompany.writerCompanyIfListEmpty(companies, fileNameWriter);
             }
-
-            System.out.println("-------------------------------------------------------------------------------");
-        } catch ( IOException e) {
-            System.out.println("Неизвестная ошибка");
-            isFindTownCompany(companies, world);
+        } catch (IOException e) {
+            printInfo.printInfo(printInfo.takeInfo(8));
+            filterTownCompany(companies, world);
         }
         return companies;
     }
@@ -56,18 +57,24 @@ public class TownFindService {
 
     public void isChoose(List<Company> companies, int choose) {
         try {
-            WriterCompany writerCompany = new WriterCompany();
-            ScannerChoose scannerChoose = new ScannerChoose();
-            if (choose == 1) {
-                writerCompany.isWriterCompanyIfEmpty(companies);
-                isTownFindService();
-               choose = scannerChoose.isScannerChoose();
-               isChoose(companies, choose);
-            }    if (choose ==3){
-                writerCompany.isWriterCompanyIfEmpty(companies);
+            switch (choose) {
+                case 1:
+                    writerCompany.writerCompanyIfListEmpty(companies, fileNameWriter);
+                    townFindService();
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    writerCompany.writerCompanyIfListEmpty(companies, fileNameWriter);
+                    break;
+                default:
+                    printInfo.printInfo(printInfo.takeInfo(10));
+                    choose = scannerAll.scannerChoose();
+                    isChoose(companies, choose);
             }
-        } catch (IOException e) {
-            System.out.println("Неизвестная ошибка");
+        } catch (InputMismatchException | IOException e) {
+            printInfo.printInfo(printInfo.takeInfo(10));
+            choose = scannerAll.scannerChoose();
             isChoose(companies, choose);
         }
     }

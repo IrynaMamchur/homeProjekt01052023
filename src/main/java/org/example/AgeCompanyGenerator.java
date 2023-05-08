@@ -1,7 +1,6 @@
 package org.example;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AgeCompanyGenerator {
@@ -16,38 +15,30 @@ public class AgeCompanyGenerator {
         this.companies = companies;
     }
 
-    public void isAgeCompanyGenerator(int age) throws IOException, FileNotFoundException {
+    PrintInfo printInfo = new PrintInfo();
+    WriterCompany writerCompany = new WriterCompany();
+    String fileName = "resources/company.txt";
+    String fileNameWriter = "resources/findCompany.txt";
+    ReadCompanyGenerator readCompanyGenerator = new ReadCompanyGenerator();
+
+    public void ageCompanyGenerator(int age) throws IOException, FileNotFoundException {
 
         try {
-            System.out.println(age);
-            ReadCompanyGenerator readCompanyGenerator = new ReadCompanyGenerator();
-            List<Company> companies = readCompanyGenerator.isReadCompanies();
-            isFindFileCompanies(age, companies);
+            List<Company> companies = readCompanyGenerator.readCompanies(fileName);
+            List<Company> answer = filterCompaniesForAge(age, companies);
+            writerCompany.writerCompany(answer, fileNameWriter);
+            printInfo.printList(answer);
         } catch (IOException e) {
-            System.out.println("Неизвестная ошибка");
+            printInfo.printInfo(printInfo.takeInfo(8));
         }
     }
 
-
-
-    public List<Company> isFindFileCompanies(int age, List<Company> companies) throws IOException {
+    public List<Company> filterCompaniesForAge(int age, List<Company> companies) throws IOException {
         List<Company> answer = companies.stream()
                 .filter(company -> company.getMinAgeLimit() <= age && company.getMaxAgeLimit() >= age)
                 .toList();
-
-        File file1 = new File("resources/findCompany.txt");
-
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file1));
-        for (Company company : answer) {
-            System.out.println(company);
-            bufferedWriter.write(String.valueOf(company));
-            bufferedWriter.newLine();
-        }
-        bufferedWriter.close();
-        System.out.println("-------------------------------------------------------------------------------");
-        return companies;
+        return answer;
     }
-
 }
 
 

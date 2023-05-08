@@ -11,7 +11,7 @@ public class Main {
         InfoAboutService infoAboutService = new InfoAboutService();
         Start start = new Start();
         infoAboutService.isInfoAboutServiceFirst();
-        start.isStart();
+        start.start();
 
     }
 }

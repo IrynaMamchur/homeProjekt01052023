@@ -1,9 +1,10 @@
 package org.example;
 
 public class Finish {
-    public void isFinish() {
-        String finish = "Спасибо, что воспользовались нашим приложением";
-        System.out.println(finish);
+    PrintInfo printInfo = new PrintInfo();
+
+    public void finish() {
+        printInfo.printInfo(printInfo.takeInfo(11));
         System.exit(0);
     }
 }

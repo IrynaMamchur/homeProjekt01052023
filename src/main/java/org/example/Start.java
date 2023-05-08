@@ -2,54 +2,54 @@ package org.example;
 
 import java.io.IOException;
 import java.util.InputMismatchException;
-import java.util.Scanner;
 
 public class Start {
+    PrintInfo printInfo = new PrintInfo();
+    LineOfBusinessFindService lineOfBusinessFindService = new LineOfBusinessFindService();
+    StatusFindService statusFindService = new StatusFindService();
+    TownFindService townFindService = new TownFindService();
+    WorkingModeFindService workingModeFindService = new WorkingModeFindService();
+    Finish finish = new Finish();
+    SexFindService sexFindService = new SexFindService();
+    ScannerAll scannerAll = new ScannerAll();
 
-    public void isStart() throws IOException {
+    public void start() throws IOException {
         try {
             AgeCalculation ageCalculation = new AgeCalculation();
-            int age = ageCalculation.isAgeCalculation();
+            int age = ageCalculation.ageCalculation();
             AgeCompanyGenerator ageCompanyGenerator = new AgeCompanyGenerator();
-            ageCompanyGenerator.isAgeCompanyGenerator(age);
-           isSearchEngine();
+            ageCompanyGenerator.ageCompanyGenerator(age);
+            searchEngine();
         } catch (IOException e) {
-            System.out.println("Неизвестная ошибка");
+            printInfo.printInfo(printInfo.takeInfo(8));
         }
     }
 
-    public void isSearchEngine() throws IOException {
+    public void searchEngine() throws IOException {
         try {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Если Вы хотите произвести отбор по месту нахождению компании, введите 1; ");
-        System.out.println("Если Вы хотите произвести отбор по форме собственности компании, введите 2; ");
-        System.out.println("Если Вы хотите произвести отбор по половому признаку, введите 3; ");
-        System.out.println("Если Вы хотите произвести отбор по сфере деятельности компании, введите 4; ");
-        System.out.println("Если Вы хотите произвести отбор по форме работы компании, введите 5; ");
-        System.out.println("Если Вы хотите выйти из приложения, введите 0; ");
-
-        int choose = scanner.nextInt();
-        LineOfBusinessFindService lineOfBusinessFindService = new LineOfBusinessFindService();
-        StatusFindService statusFindService = new StatusFindService();
-        TownFindService townFindService = new TownFindService();
-        WorkingModeFindService workingModeFindService = new WorkingModeFindService();
-        Finish finish = new Finish();
-        SexFindService sexFindService = new SexFindService();
+            printInfo.printInfo(printInfo.takeInfo(29));
+            printInfo.printInfo(printInfo.takeInfo(30));
+            printInfo.printInfo(printInfo.takeInfo(31));
+            printInfo.printInfo(printInfo.takeInfo(32));
+            printInfo.printInfo(printInfo.takeInfo(33));
+            printInfo.printInfo(printInfo.takeInfo(34));
+            int choose = scannerAll.scannerNumber();
             switch (choose) {
-                case 1 -> townFindService.isTownFindService();
-                case 2 -> statusFindService.isStatusFindService();
-                case 3 -> sexFindService.isSexFindService();
-                case 4 -> lineOfBusinessFindService.isLineOfBusinessFindService();
-                case 5 -> workingModeFindService.isWorkingModeFindService();
-                case 0 -> finish.isFinish();
+                case 1 -> townFindService.townFindService();
+                case 2 -> statusFindService.statusFindService();
+                case 3 -> sexFindService.sexFindService();
+                case 4 -> lineOfBusinessFindService.lineOfBusinessFindService();
+                case 5 -> workingModeFindService.workingModeFindService();
+                case 0 -> finish.finish();
                 default -> {
-                    System.out.println("Вы ввели некорректную цифру, повторите, пожалуйста, Ваш выбор");
-                    isSearchEngine();
+                    printInfo.printInfo(printInfo.takeInfo(10));
+                    ;
+                    searchEngine();
                 }
             }
         } catch (InputMismatchException | IOException e) {
-            System.out.println("Неправильно введены цифры. Введите, пожалуйста, цифровое значение");
-            isSearchEngine();
+            printInfo.printInfo(printInfo.takeInfo(2));
+            searchEngine();
         }
     }
 

@@ -8,29 +8,28 @@ import java.util.List;
 
 
 public class WriterCompany {
+    PrintInfo printInfo = new PrintInfo();
 
-    public List<Company> isWriterCompany(List<Company> answer) throws IOException {
+    public List<Company> writerCompany(List<Company> answer, String fileNameWriter) throws IOException {
         try {
-            File file = new File("resources/findCompany.txt");
+            File file = new File(fileNameWriter);
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
             for (Company company : answer) {
-                System.out.println(company);
                 bufferedWriter.write(String.valueOf(company));
                 bufferedWriter.newLine();
             }
             bufferedWriter.close();
-
         } catch (IOException e) {
-            System.out.println("Неизвестная ошибка");
-            isWriterCompany(answer);
+            printInfo.printInfo(printInfo.takeInfo(8));
+            writerCompany(answer, fileNameWriter);
         }
         return answer;
     }
 
 
-    public List<Company> isWriterCompanyIfEmpty(List<Company> companies) throws IOException {
+    public List<Company> writerCompanyIfListEmpty(List<Company> companies, String fileNameWriter) throws IOException {
         try {
-            File file = new File("resources/findCompany.txt");
+            File file = new File(fileNameWriter);
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
             for (Company company : companies) {
                 bufferedWriter.write(String.valueOf(company));
@@ -38,13 +37,14 @@ public class WriterCompany {
             }
             bufferedWriter.close();
         } catch (IOException e) {
-            System.out.println("Неизвестная ошибка");
-            isWriterCompany(companies);
+            printInfo.printInfo(printInfo.takeInfo(8));
+            writerCompany(companies, fileNameWriter);
         }
         return companies;
     }
 
+}
 
-    }
+
 
 

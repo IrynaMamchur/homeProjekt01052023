@@ -4,87 +4,100 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Scanner;
-
-
 
 
 public class SexFindService {
+    PrintInfo printInfo = new PrintInfo();
+    ScannerAll scannerAll = new ScannerAll();
+    WriterCompany writerCompany = new WriterCompany();
+    String fileName = "resources/findCompany.txt";
+    String fileNameWriter = "resources/findCompany.txt";
+    ReadCompanyGenerator readCompanyGenerator = new ReadCompanyGenerator();
 
-    public void isSexFindService() throws IOException, FileNotFoundException {
+
+    public void sexFindService() throws IOException, FileNotFoundException {
 
         try {
-            ReadCompanyGenerator readCompanyGenerator = new ReadCompanyGenerator();
-            ScannerChoose scannerChoose = new ScannerChoose();
+            printInfo.printInfo(printInfo.takeInfo(24));
+            printInfo.printInfo(printInfo.takeInfo(25));
+            printInfo.printInfo(printInfo.takeInfo(26));
+            printInfo.printInfo(printInfo.takeInfo(27));
+            printInfo.printInfo(printInfo.takeInfo(28));
+            List<Company> companies = readCompanyGenerator.readCompanies(fileName);
+            int statusChoose = scannerAll.scannerNumber();
+            filterSexCompany(companies, statusChoose);
+            int choose = scannerAll.scannerChoose();
+            selectionOfActionsInThisCategory(companies, choose);
             FurtherActions furtherActions = new FurtherActions();
-            System.out.println("Выбор по половому признаку");
-            System.out.println("Если Вам нужны компании:");
-            System.out.println(" для лиц только мужского пола - введите 1,");
-            System.out.println(" для лиц только женского пола - введите 2,");
-            System.out.println(" для всех лиц - введите 3.");
-            List<Company> companies = readCompanyGenerator.isReadAllCompanies();
-            int  statusChoose =scannerChoose.isScanner();
-            isFindSexCompany(companies, statusChoose);
-            int choose = scannerChoose.isScannerChoose();
-            isChoose(companies, choose);
-            furtherActions.isFurtherActions();
+            int stepAgo = scannerAll.scannerFurtherActions();
+            furtherActions.choiceFurtherActions(stepAgo);
 
         } catch (IOException e) {
-            System.out.println("Неизвестная ошибка");
+            printInfo.printInfo(printInfo.takeInfo(8));
+            sexFindService();
         }
     }
 
 
-
-    public List<Company> isFindSexCompany(List<Company> companies, int statusChoose) throws IOException {
-
+    public List<Company> filterSexCompany(List<Company> companies, int statusChoose) throws IOException {
         try {
-            WriterCompany writerCompany = new WriterCompany();
-            ScannerChoose scannerChoose = new ScannerChoose();
             List<Company> answer = new ArrayList<>();
-            if (statusChoose == 1) {
-                answer = companies.stream()
-                        .filter(company -> company.getSex().equals(Sex.MALE))
-                        .toList();
-            } else if (statusChoose == 2) {
-                answer = companies.stream()
-                        .filter(company -> company.getSex().equals(Sex.FEMALE))
-                        .toList();
-            } else if (statusChoose == 3) {
-                answer = companies.stream()
-                        .filter(company -> company.getSex().equals(Sex.ALL))
-                        .toList();
-            } else {
-                System.out.println("Вы ввели некорректную цифру, повторите, пожалуйста, Ваш выбор");
-                statusChoose =scannerChoose.isScanner();
-                isFindSexCompany(companies, statusChoose);
+            switch (statusChoose) {
+                case 1:
+                    answer = companies.stream()
+                            .filter(company -> company.getSex().equals(Sex.MALE))
+                            .toList();
+                    break;
+                case 2:
+                    answer = companies.stream()
+                            .filter(company -> company.getSex().equals(Sex.FEMALE))
+                            .toList();
+                    break;
+                case 3:
+                    answer = companies.stream()
+                            .filter(company -> company.getSex().equals(Sex.ALL))
+                            .toList();
+                    break;
+                default:
+                    printInfo.printInfo(printInfo.takeInfo(10));
+                    statusChoose = scannerAll.scannerNumber();
+                    filterSexCompany(companies, statusChoose);
             }
-            writerCompany.isWriterCompany(answer);
+            writerCompany.writerCompany(answer, fileNameWriter);
+            printInfo.printList(answer);
             if (answer.size() == 0) {
-                System.out.println("По заданному поиску компаний не найдено");
-                writerCompany.isWriterCompanyIfEmpty(companies);
+                printInfo.printInfo(printInfo.takeInfo(15));
+                writerCompany.writerCompanyIfListEmpty(companies, fileNameWriter);
             }
-            System.out.println("-------------------------------------------------------------------------------");
-
         } catch (InputMismatchException | IOException e) {
-            System.out.println("Неправильно введены цифры. Введите, пожалуйста, цифровое значение");
-            isFindSexCompany(companies, statusChoose);
+            printInfo.printInfo(printInfo.takeInfo(2));
+            statusChoose = scannerAll.scannerNumber();
+            filterSexCompany(companies, statusChoose);
         }
         return companies;
     }
 
-    public void isChoose(List<Company> companies, int choose) {
+    public void selectionOfActionsInThisCategory(List<Company> companies, int choose) {
         try {
-            WriterCompany writerCompany = new WriterCompany();
-            if (choose == 1) {
-                writerCompany.isWriterCompanyIfEmpty(companies);
-                isSexFindService();
-            }    if (choose ==3){
-                writerCompany.isWriterCompanyIfEmpty(companies);
+            switch (choose) {
+                case 1:
+                    writerCompany.writerCompanyIfListEmpty(companies, fileNameWriter);
+                    sexFindService();
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    writerCompany.writerCompanyIfListEmpty(companies, fileNameWriter);
+                    break;
+                default:
+                    printInfo.printInfo(printInfo.takeInfo(10));
+                    choose = scannerAll.scannerChoose();
+                    selectionOfActionsInThisCategory(companies, choose);
             }
-        } catch (IOException e) {
-            System.out.println("Неизвестная ошибка");
-            isChoose(companies, choose);
+        } catch (InputMismatchException | IOException e) {
+            printInfo.printInfo(printInfo.takeInfo(10));
+            choose = scannerAll.scannerChoose();
+            selectionOfActionsInThisCategory(companies, choose);
         }
     }
 

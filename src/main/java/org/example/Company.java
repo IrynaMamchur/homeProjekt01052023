@@ -15,18 +15,48 @@ public class Company {
     private int maxAgeLimit;
     private List<Company> companies;
 
-    public Company(String name, int yearOfCreation, String locationCity, TypeOfCompany status, String lineOfBusiness, WorkingMode workingMode, Sex sex, int minAgeLimit, int maxAgeLimit) {
-        this.name = name;
-        this.yearOfCreation = yearOfCreation;
-        this.locationCity = locationCity;
-        this.status = status;
-        this.lineOfBusiness = lineOfBusiness;
-        this.workingMode = workingMode;
-        this.sex = sex;
-        this.minAgeLimit = minAgeLimit;
-        this.maxAgeLimit = maxAgeLimit;
+
+
+    public int getComp() {
+        return comp;
     }
 
+    public void setComp(int comp) {
+        this.comp = comp;
+    }
+
+    private int comp;
+
+
+
+
+//    public Company(String[] data{String name, int yearOfCreation, String locationCity, TypeOfCompany status, String lineOfBusiness, WorkingMode workingMode, Sex sex, int minAgeLimit, int maxAgeLimit}); {
+//        String companyString = "";
+//        String[] data = companyString.split(" ");
+//        this.name = data[0];
+//        this.yearOfCreation =  Integer.parseInt(data[1]);
+//        this.locationCity =  data[2];
+//        this.status = TypeOfCompany.valueOf(data[3]);
+//          this.lineOfBusiness =data[4];
+//     this.workingMode = WorkingMode.valueOf(data[5]);
+//        this.sex = Sex.valueOf(data[6]);
+//       this.minAgeLimit = Integer.parseInt(data[7]);
+//        this.maxAgeLimit = Integer.parseInt(data[8]);
+//       }
+
+
+
+     public Company(String name, int yearOfCreation, String locationCity, TypeOfCompany status, String lineOfBusiness, WorkingMode workingMode, Sex sex, int minAgeLimit, int maxAgeLimit) {
+            this.name = name;
+            this.yearOfCreation = yearOfCreation;
+            this.locationCity = locationCity;
+            this.status = status;
+            this.lineOfBusiness = lineOfBusiness;
+            this.workingMode = workingMode;
+            this.sex = sex;
+            this.minAgeLimit = minAgeLimit;
+            this.maxAgeLimit = maxAgeLimit;
+        }
     public String getName() {
         return name;
     }
@@ -124,14 +154,14 @@ public class Company {
     @Override
     public String toString() {
         return name +
-                "  " + yearOfCreation +
-                "  " + locationCity +
-                "  " + status +
-                "  " + lineOfBusiness +
-                "  " + workingMode +
-                "  " + sex +
-                "  " + minAgeLimit +
-                "  " + maxAgeLimit;
+                " " + yearOfCreation +
+                " " + locationCity +
+                " " + status +
+                " " + lineOfBusiness +
+                " " + workingMode +
+                " " + sex +
+                " " + minAgeLimit +
+                " " + maxAgeLimit;
     }
 
 }

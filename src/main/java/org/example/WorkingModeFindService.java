@@ -4,90 +4,98 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Scanner;
-
 
 
 public class WorkingModeFindService {
+    PrintInfo printInfo = new PrintInfo();
+    ScannerAll scannerAll = new ScannerAll();
+    WriterCompany writerCompany = new WriterCompany();
+    String fileName = "resources/findCompany.txt";
+    String fileNameWriter = "resources/findCompany.txt";
+    ReadCompanyGenerator readCompanyGenerator = new ReadCompanyGenerator();
 
-    public void isWorkingModeFindService() throws IOException, FileNotFoundException {
+
+    public void workingModeFindService() throws IOException, FileNotFoundException {
         try {
-            ReadCompanyGenerator readCompanyGenerator = new ReadCompanyGenerator();
-            ScannerChoose scannerChoose = new ScannerChoose();
-            System.out.println("Выбор по форме работы компании");
-            System.out.println("Если Вас интересуют компании, которые работают только ОН-ЛАЙН,введите 1,");
-            System.out.println("если компании, которые работают только ОФФ-ЛАЙН,введите 2,");
-            System.out.println("ecли компании, которые работают, как ОН-ЛАЙН, так и ОФФ-ЛАЙН, введите 3.");
+            printInfo.printInfo(printInfo.takeInfo(40));
+            printInfo.printInfo(printInfo.takeInfo(41));
+            printInfo.printInfo(printInfo.takeInfo(42));
+            printInfo.printInfo(printInfo.takeInfo(43));
+            List<Company> companies = readCompanyGenerator.readCompanies(fileName);
+            int statusChoose = scannerAll.scannerNumber();
+            filterWorkingMode(companies, statusChoose);
+            int choose = scannerAll.scannerChoose();
+            selectionOfActionsInThisCategory(companies, choose);
             FurtherActions furtherActions = new FurtherActions();
-            List<Company> companies = readCompanyGenerator.isReadAllCompanies();
-            int statusChoose = scannerChoose.isScanner();
-            isFindWorkingMode(companies, statusChoose);
-            int choose = scannerChoose.isScannerChoose();
-            isChoose(companies, choose);
-            furtherActions.isFurtherActions();
-
+            int stepAgo = scannerAll.scannerFurtherActions();
+            furtherActions.choiceFurtherActions(stepAgo);
         } catch (IOException e) {
-            System.out.println("Неизвестная ошибка");
+            printInfo.printInfo(printInfo.takeInfo(8));
+            workingModeFindService();
         }
     }
 
-
-
-    public List<Company> isFindWorkingMode(List<Company> companies, int statusChoose) throws IOException {
+    public List<Company> filterWorkingMode(List<Company> companies, int statusChoose) throws IOException {
         try {
-            WriterCompany writerCompany = new WriterCompany();
-            ScannerChoose scannerChoose = new ScannerChoose();
             List<Company> answer = new ArrayList<>();
-            if (statusChoose == 1) {
-                answer = companies.stream()
-                        .filter(company -> company.getWorkingMode().equals(WorkingMode.ON_LINE))
-                        .toList();
-            } else if (statusChoose == 2) {
-                answer = companies.stream()
-                        .filter(company -> company.getWorkingMode().equals(WorkingMode.OFF_LINE))
-                        .toList();
-            } else if (statusChoose == 3) {
-                answer = companies.stream()
-                        .filter(company -> company.getWorkingMode().equals(WorkingMode.ON_OFF_LINE))
-                        .toList();
-            } else {
-                System.out.println("Вы ввели некорректную цифру, повторите, пожалуйста, Ваш выбор");
-                statusChoose = scannerChoose.isScanner();
-                isFindWorkingMode(companies, statusChoose);
+            switch (statusChoose) {
+                case 1:
+                    answer = companies.stream()
+                            .filter(company -> company.getWorkingMode().equals(WorkingMode.ON_LINE))
+                            .toList();
+                    break;
+                case 2:
+                    answer = companies.stream()
+                            .filter(company -> company.getWorkingMode().equals(WorkingMode.OFF_LINE))
+                            .toList();
+                    break;
+                case 3:
+                    answer = companies.stream()
+                            .filter(company -> company.getWorkingMode().equals(WorkingMode.ON_OFF_LINE))
+                            .toList();
+                    break;
+                default:
+                    printInfo.printInfo(printInfo.takeInfo(10));
+                    statusChoose = scannerAll.scannerNumber();
+                    filterWorkingMode(companies, statusChoose);
             }
-            writerCompany.isWriterCompany(answer);
-
+            writerCompany.writerCompany(answer, fileNameWriter);
+            printInfo.printList(answer);
             if (answer.size() == 0) {
-                System.out.println("По заданному поиску компаний не найдено");
-                writerCompany.isWriterCompanyIfEmpty(companies);
+                printInfo.printInfo(printInfo.takeInfo(15));
+                writerCompany.writerCompanyIfListEmpty(companies, fileNameWriter);
             }
-            System.out.println("-------------------------------------------------------------------------------");
 
         } catch (IOException e) {
-            System.out.println("Неизвестная ошибка");
-            isFindWorkingMode(companies, statusChoose);
+            printInfo.printInfo(printInfo.takeInfo(8));
+            statusChoose = scannerAll.scannerNumber();
+            filterWorkingMode(companies, statusChoose);
         }
         return companies;
     }
 
 
-    public void isChoose(List<Company> companies, int choose) {
+    public void selectionOfActionsInThisCategory(List<Company> companies, int choose) {
         try {
-            WriterCompany writerCompany = new WriterCompany();
-            ScannerChoose scannerChoose = new ScannerChoose();
-            if (choose == 1) {
-                writerCompany.isWriterCompanyIfEmpty(companies);
-                isWorkingModeFindService();
-//                int statusChoose = scannerChoose.isScanner();
-//                isFindWorkingMode(companies, statusChoose);
-//                choose = scannerChoose.isScannerChoose();
-//                isChoose(companies, choose);
-            }    if (choose ==3){
-                writerCompany.isWriterCompanyIfEmpty(companies);
+            switch (choose) {
+                case 1:
+                    writerCompany.writerCompanyIfListEmpty(companies, fileNameWriter);
+                    workingModeFindService();
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    writerCompany.writerCompanyIfListEmpty(companies, fileNameWriter);
+                    break;
+                default:
+                    printInfo.printInfo(printInfo.takeInfo(10));
+                    choose = scannerAll.scannerChoose();
+                    selectionOfActionsInThisCategory(companies, choose);
             }
         } catch (InputMismatchException | IOException e) {
-            System.out.println("Неправильно введены цифры. Введите, пожалуйста, цифровое значение");
-            isChoose(companies, choose);
+            printInfo.printInfo(printInfo.takeInfo(10));
+            choose = scannerAll.scannerChoose();
+            selectionOfActionsInThisCategory(companies, choose);
         }
     }
 }

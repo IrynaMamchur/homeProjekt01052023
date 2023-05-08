@@ -2,7 +2,7 @@ package org.example;
 
 public class InfoAboutService {
 
-    public void isInfoAboutServiceFirst() {
+    public void infoAboutServiceFirst() {
         System.out.println("Рады приветствовать в нашем приложении.");
         System.out.println("Наше приложении работает, исходя из указанного Вами возраста. Поэтому Вам необходимо ввести дату своего рождения.");
         System.out.println("После чего на экране появится полный список компаний, которые подходят для Вашего возраста. ");

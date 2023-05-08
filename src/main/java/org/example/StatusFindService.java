@@ -4,77 +4,92 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Scanner;
-
 
 
 public class StatusFindService {
-    public void isStatusFindService() throws IOException, FileNotFoundException {
+    PrintInfo printInfo = new PrintInfo();
+    WriterCompany writerCompany = new WriterCompany();
+    ScannerAll scannerAll = new ScannerAll();
+    String fileName = "resources/findCompany.txt";
+    String fileNameWriter = "resources/findCompany.txt";
+    ReadCompanyGenerator readCompanyGenerator = new ReadCompanyGenerator();
 
+
+    public void statusFindService() throws IOException, FileNotFoundException {
         try {
-            ReadCompanyGenerator readCompanyGenerator = new ReadCompanyGenerator();
-            ScannerChoose scannerChoose = new ScannerChoose();
+            printInfo.printInfo(printInfo.takeInfo(35));
+            printInfo.printInfo(printInfo.takeInfo(36));
+            printInfo.printInfo(printInfo.takeInfo(37));
+            List<Company> companies = readCompanyGenerator.readCompanies(fileName);
+            int statusChoose = scannerAll.scannerNumber();
+            filterStatusCompany(companies, statusChoose);
+            int choose = scannerAll.scannerChoose();
+            selectionOfActionsInThisCategory(companies, choose);
             FurtherActions furtherActions = new FurtherActions();
-            System.out.println("Выбор по форме собственности компании");
-            System.out.println("Если Вас интересуют государственные учреждения - введите 1,");
-            System.out.println(" если коммерческие - введите 2.");
-            List<Company> companies = readCompanyGenerator.isReadAllCompanies();
-            int statusChoose =scannerChoose.isScanner();
-            isFindStatusCompany(companies, statusChoose);
-            int choose = scannerChoose.isScannerChoose();
-            isChoose(companies,choose);
-            furtherActions.isFurtherActions();
+            int stepAgo = scannerAll.scannerFurtherActions();
+            furtherActions.choiceFurtherActions(stepAgo);
 
         } catch (IOException e) {
-            System.out.println("Неизвестная ошибка");
+            printInfo.printInfo(printInfo.takeInfo(8));
+            statusFindService();
         }
     }
 
-    public List<Company> isFindStatusCompany(List<Company> companies, int statusChoose) throws IOException {
+    public List<Company> filterStatusCompany(List<Company> companies, int statusChoose) throws IOException {
         try {
-            WriterCompany writerCompany = new WriterCompany();
-            ScannerChoose scannerChoose = new ScannerChoose();
             List<Company> answer = new ArrayList<>();
-            if (statusChoose == 1) {
-                answer = companies.stream()
-                        .filter(company -> company.getStatus().equals(TypeOfCompany.STATE))
-                        .toList();
-            } else if (statusChoose == 2) {
-                answer = companies.stream()
-                        .filter(company -> company.getStatus().equals(TypeOfCompany.COMMERCIAL))
-                        .toList();
-            } else {
-                System.out.println("Вы ввели некорректную цифру, повторите, пожалуйста, Ваш выбор");
-                statusChoose = scannerChoose.isScanner();
-                isFindStatusCompany(companies, statusChoose);
+            switch (statusChoose) {
+                case 1:
+                    answer = companies.stream()
+                            .filter(company -> company.getStatus().equals(TypeOfCompany.STATE))
+                            .toList();
+                    break;
+                case 2:
+                    answer = companies.stream()
+                            .filter(company -> company.getStatus().equals(TypeOfCompany.COMMERCIAL))
+                            .toList();
+                    break;
+                default:
+                    printInfo.printInfo(printInfo.takeInfo(10));
+                    ;
+                    statusChoose = scannerAll.scannerNumber();
+                    filterStatusCompany(companies, statusChoose);
             }
-            writerCompany.isWriterCompany(answer);
+            writerCompany.writerCompany(answer, fileNameWriter);
+            printInfo.printList(answer);
             if (answer.size() == 0) {
-                System.out.println("По заданному поиску компаний не найдено");
-                writerCompany.isWriterCompanyIfEmpty(companies);
+                printInfo.printInfo(printInfo.takeInfo(15));
+                writerCompany.writerCompanyIfListEmpty(companies, fileNameWriter);
             }
-            System.out.println("-------------------------------------------------------------------------------");
-        } catch (IOException e) {
-            System.out.println("Неизвестная ошибка");
-            isFindStatusCompany(companies,statusChoose);
+        } catch (InputMismatchException e) {
+            printInfo.printInfo(printInfo.takeInfo(2));
+            statusChoose = scannerAll.scannerNumber();
+            filterStatusCompany(companies, statusChoose);
         }
         return companies;
     }
 
-    public void isChoose(List<Company> companies, int choose) {
+    public void selectionOfActionsInThisCategory(List<Company> companies, int choose) {
         try {
-            WriterCompany writerCompany = new WriterCompany();
-            ScannerChoose scannerChoose = new ScannerChoose();
-            if (choose == 1) {
-                writerCompany.isWriterCompanyIfEmpty(companies);
-                isStatusFindService();
-            }
-            if (choose ==3){
-                writerCompany.isWriterCompanyIfEmpty(companies);
+            switch (choose) {
+                case 1:
+                    writerCompany.writerCompanyIfListEmpty(companies, fileNameWriter);
+                    statusFindService();
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    writerCompany.writerCompanyIfListEmpty(companies, fileNameWriter);
+                    break;
+                default:
+                    printInfo.printInfo(printInfo.takeInfo(10));
+                    choose = scannerAll.scannerChoose();
+                    selectionOfActionsInThisCategory(companies, choose);
             }
         } catch (InputMismatchException | IOException e) {
-            System.out.println("Неизвестная ошибка");
-            isChoose(companies, choose);
+            printInfo.printInfo(printInfo.takeInfo(10));
+            choose = scannerAll.scannerChoose();
+            selectionOfActionsInThisCategory(companies, choose);
         }
     }
 

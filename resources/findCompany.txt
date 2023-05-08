@@ -1,3 +1,13 @@
-Первые_языковые_курсы  2020  БЕРЛИН  STATE  языковые_курсы  OFF_LINE  ALL  6  55
-Лучшая_языковая_школа  2023  БЕРЛИН  COMMERCIAL  языковые_курсы  ON_OFF_LINE  ALL  3  75
-За_рулем  2002  БЕРЛИН  COMMERCIAL  курсы_вождения  OFF_LINE  ALL  16  65
+Первые_языковые_курсы 2020 БЕРЛИН STATE языковые_курсы OFF_LINE ALL 6 55
+Лингвиал 2003 МЮНХЕН COMMERCIAL языковые_курсы ON_LINE ALL 18 33
+Лучшая_языковая_школа 2023 БЕРЛИН COMMERCIAL языковые_курсы ON_OFF_LINE ALL 3 75
+Мир_через_рисунки 2018 МЮНХЕН COMMERCIAL изобразительное_искусство ON_OFF_LINE ALL 5 28
+Рисуем_вместе 2017 НЮРНБЕРГ COMMERCIAL изобразительное_искусство ON_OFF_LINE ALL 5 100
+Леди_за_рулем 2021 БЕРЛИН COMMERCIAL курсы_вождения OFF_LINE FEMALE 18 65
+Школа_вождения 2014 МЮНХЕН COMMERCIAL курсы_вождения OFF_LINE ALL 16 65
+За_рулем 2002 БЕРЛИН COMMERCIAL курсы_вождения OFF_LINE ALL 16 65
+Полетаем 2022 НЮРНБЕРГ COMMERCIAL прыжки_с_парашютом OFF_LINE MALE 23 45
+Вместе_в_небе 2017 МЮНХЕН COMMERCIAL прыжки_с_парашютом OFF_LINE ALL 16 65
+Йога_для_беременных 2006 БЕРЛИН COMMERCIAL йога OFF_LINE FEMALE 18 55
+Йога_здесь 2009 НЮРНБЕРГ COMMERCIAL йога OFF_LINE ALL 12 85
+К_умиротворению_через_йогу 2003 НЮРНБЕРГ COMMERCIAL йога ON_OFF_LINE ALL 12 85
